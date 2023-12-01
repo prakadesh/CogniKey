@@ -27,3 +27,11 @@ The given flowchart shows the process of the keystroke dynamic prototype system.
 # USAGE 
 we can launch the website using the python file server.py 
 
+# Screenshots 
+![image](https://github.com/prakadesh/KEYBOTICS/assets/84655612/9a79518e-db88-4dd5-b7b9-998d8f6fd20d)
+![image](https://github.com/prakadesh/KEYBOTICS/assets/84655612/554fd489-75bc-46db-8b80-f0c3e08e31f7)
+![image](https://github.com/prakadesh/KEYBOTICS/assets/84655612/febf1c2b-1860-494b-b7b2-c71821194e8f)
+![image](https://github.com/prakadesh/KEYBOTICS/assets/84655612/7805e937-9080-4e6d-ba78-393db23dc847)
+![image](https://github.com/prakadesh/KEYBOTICS/assets/84655612/238be815-823d-434b-99c8-6f472a3da11a)
+
+
