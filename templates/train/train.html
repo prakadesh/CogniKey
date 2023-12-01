@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="static/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>training page</title>
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="static/css/signin.css" rel="stylesheet">
+    <!-- jquery -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" type="text/javascript"></script>
+  </head>
+
+  <span type="button" onclick="window.location.href = '/'" class="material-icons">arrow_back_ios</span>
+
+  <body class="text-center">
+
+    <!--==================================================================== INPUT DIGITAÇÃO ====================================================================-->
+    <div class='typing-form' style="display:block;">
+      <img class="mb-4" src="{{ url_for('static', filename='img/logo.png') }}" alt="" width="400" height="400">
+      <h1>Train your biometrics by typing the following text:</h1>
+      <div id='text_color' style="color: black; font-style: italic;">
+        <h2>"great rewards come when people trust you"</h2>
+      </div>
+      <textarea onkeydown="keyDown();" onkeyup="keyUp();" type="text" class="h6 mb-3 form-control" id="texto_input" placeholder="Great Rewards..." cols="20" rows="3"></textarea>
+      <input type="text" id="username" class="h6 mb-3 form-control" placeholder="username">
+      <button id="btn_cadastrar" disabled type="button" onclick="send_biometric()"  aria-expanded="false" class="btn-signup btn btn-lg btn-primary btn-block">Register</button>
+      <h6 class="h6 mb-3 font-weight-normal text-danger">Observation</h6>
+      <h6 class="font-weight-normal">No typos are predicted, if it occurs, the process will be restarted.</h6>
+      <h6 class="font-weight-normal">Each user must have 5 biometric standards registered in the system, the first being performed in the registration stage and the other in the training stage.</h6>
+    </div>
+
+    <!--==================================================================== Cadastro sucesso ====================================================================-->
+    <div class='cadastro_sucesso' style="display:none;">
+      <h1>succesful</h1>
+      <button id="login_page" type="button" onclick="window.location.href = '/treinar'" class="btn-signup btn btn-lg btn-primary btn-block">TRAIN AGAIN</button>
+    </div>
+
+
+
+<!--==================================================================== SCRIPTS ====================================================================-->
+<script type="text/javascript">
+  var entrada_dados;
+  var digitacao_pattern = [];
+  var texto_input;
+  var texto_padrao = "great rewards come when people trust you";
+  const botao_cadastro = document.getElementById("btn_cadastrar");
+  const cadastro_sucesso = document.querySelector(".cadastro_sucesso");
+  const form = document.querySelector('.form');
+  const typing_form = document.querySelector('.typing-form');
+  const exist = document.querySelector('.user_already_exist');
+  
+  var ref = 0;
+  var ref2 = 1;
+  var biometric_data = [];
+  
+   function keyDown(){
+    time_1 = Date.now();
+    if(ref == 1){
+      hold_time2 = (time_2 - time_1) / 1000;
+      biometric_data.push(hold_time2);
+      verificaTexto();
+    }
+    flightTime(time_1);
+  }
+
+  function keyUp(){
+    time_2 = Date.now();
+    hold_time1 = (time_1 - time_2) / 1000;
+    biometric_data.push(hold_time1);
+    ref = 1;
+    verificaTexto();
+  }
+
+  function flightTime(time){
+      if (ref2 == 1) {
+        flight_time_init = time;
+        ref2 = 0; 
+      }
+      else {
+        flight_time_final = time;
+        flight_time = (flight_time_init - flight_time_final) / 1000;
+        ref2 = 1;
+      }
+  }
+  
+  function verificaTexto() {
+        var key = event.keyCode || event.charCode;
+        if( key == 8 ){
+          window.location.reload(false); 
+        }
+        console.log(biometric_data);
+        texto_input = document.getElementById("texto_input").value;
+        if (texto_padrao == texto_input){
+          document.getElementById("text_color").style.color="#19e030";
+          botao_cadastro.disabled = false;
+          console.log('digitado corretamente');
+          console.log(biometric_data);
+        }
+        else {
+          document.getElementById("text_color").style.color="#de213a";
+          botao_cadastro.disabled = true;
+          console.log('texto não correto')
+        }
+      }
+  
+  function send_biometric(){
+      typing_form.style.display = 'none'
+      cadastro_sucesso.style.display = 'block'
+      $.ajax({
+          type : 'POST',
+          url : window.location.href + '/biometria',
+          contentType: 'application/json; charset=UTF-8',
+          data : JSON.stringify({'username':username.value, 'data':biometric_data}),
+          dataType : 'json',
+			success: function(rdata){
+				if(rdata['biometric_cod']=='Success'){
+					console.log('sucess')
+				}
+				else if(rdata['biometric_cod']=='Fail'){
+          console.log('fail');
+				}
+			}
+		});
+    }
+    
+</script>
+
+    
+  </body>
+</html>
