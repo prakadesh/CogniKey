@@ -1,5 +1,5 @@
-# KEYBOTICS
-A Web-Based Authentication System Based on Keystroke Dynamics
+# CogniKey: Behavioral Biometrics Authentication
+Welcome to CogniKey, a pioneering web-based authentication system that transforms security through the fusion of cognitive and behavioral biometrics. In this digital age where identities are paramount, CogniKey takes the lead by harnessing the nuances of individual behaviors to create a strong authentication foundation.
 # INTRODUCTION
 Due to rapid digitization of the industry, data has become one of the most valuable and critical assets of enterprises. Data leakage is a serious threat for companies, which can cause massive financial and reputational loses. This is why, increasing security in order to prevent data loss is one of the most pressing objectives for enterprises today.
 There are several ways in which data can be leaked from inside a company. It is often said that end users are the weakest link in a security chain. After all, even if all data is encrypted, if an attacker manages to compromise devices belonging to internal employees, they could get access inside the enterprise. There could also be cases where an internal employee intentionally leaks data for various reasons like sabotaging or revenge. Most commonly, users are asked to log in using either something they know, for example user names and passwords, something they have,
